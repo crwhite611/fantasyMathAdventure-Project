@@ -1,18 +1,20 @@
 # This is an awesome python project written and designed by LJ, Nathan, and Callie
 
+from collections import namedtuple
 import time # Allows use of sleep function; makes the program look cooler
 
-# \/ Declare questions here \/
+# \/ Declare question lists here \/
 
 easyQuestions = []
 mediumQuestions = []
 hardQuestions = []
 
+playerCharacter = namedtuple('race', 'critTime', 'health') # Creates "mould" for character object; allows us to map characteristics to character name
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
 
-while playerStartInput != 'q': # While loop keeps game going
+while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
-# Charcter Selection; \/ needs finishing \/
+# Charcter Selection Walkthrough
 
     print("\nThis is the Character Selecter. Each character has unique abilities, ranging from different healths, to crit times, to special powers.\n")
     time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
@@ -26,4 +28,24 @@ while playerStartInput != 'q': # While loop keeps game going
     print("2. Name: Samson\n   Race: Hobbit\n   Health: 10\n   Crit time: 7 Seconds\n   Special Ability: Upon a wrong answer, you get one extra chance to answer again before you take damage\n")
     print("3. Name: Rog\n   Race: Orc\n   Health: 12\n   Crit time: 6 Seconds\n   Special Ability: Once you have a two question streak, your crit time becomes unlimited\n")
 
+# \/ Creates objects for each character \/ 
+
+    rush = playerCharacter('Elf', '8','8')
+    samson = playerCharacter('Hobbit', '7','10')
+    rog = playerCharacter('Orc','6','12')
+
+# \/ Take input for character selection \/
+
     characterSelection = input("")
+
+# \/ Matches variable "character" to whichever one was selected \/
+
+    match characterSelection:
+        case '1':
+            character = rush
+        case '2':
+            character = samson
+        case '3':
+            character = rog
+        
+
