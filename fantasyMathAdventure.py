@@ -50,5 +50,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         case '3':
             character = rog
 
+# \/ Prints character selection by calling the 'name' value from the corresponding namedtuple \/
+
     print(f'Awesome! You chose {character.name}!')    
 
