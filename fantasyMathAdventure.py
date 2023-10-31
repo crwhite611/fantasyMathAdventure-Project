@@ -37,7 +37,7 @@ hardQuestions = {
     "question" : 40
 }
 
-playerCharacter = namedtuple('playerCharacter',['name','race', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
+playerCharacter = namedtuple('playerCharacter',['name','race', 'attack', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
 
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
 
@@ -61,9 +61,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Creates objects for each character \/ 
 
-    rush = playerCharacter('Rush','Elf', '8','8')
-    samson = playerCharacter('Samson','Hobbit', '10','7')
-    rog = playerCharacter('Rog','Orc','12','6')
+    rush = playerCharacter('Rush','Elf', '5', '8','8')
+    samson = playerCharacter('Samson','Hobbit', '7', '10','7')
+    rog = playerCharacter('Rog','Orc','6', '12','6')
 
 # \/ Take input for character selection \/
 
