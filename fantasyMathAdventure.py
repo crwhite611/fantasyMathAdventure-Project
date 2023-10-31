@@ -1,4 +1,4 @@
-# This is an awesome python project written and designed by LJ, Nathan, and Callie
+# \/ This is an awesome python project written and designed by LJ, Nathan, and Callie \/
 
 from collections import namedtuple
 import time # Allows use of sleep function; makes the program look cooler
@@ -14,7 +14,7 @@ playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \
 
 while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
-# Charcter Selection Walkthrough
+# \/ Charcter Selection Walkthrough \/
 
     print("\nThis is the Character Selecter. Each character has unique abilities, ranging from different healths, to crit times, to special powers.\n")
     time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
@@ -23,10 +23,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print("Some creatures also have special abilities to give you some extra help along the way.\n")
     time.sleep(4)
     print("To select your character, type the number by your character's name:\n")
+    time.sleep(4)
 
     print("1. Name: Rush\n   Race: Elf\n   Health: 8\n   Crit time: 8 Seconds\n   Special Ability: Once you have a two question streak, you will regain two life per correct answer\n")
     print("2. Name: Samson\n   Race: Hobbit\n   Health: 10\n   Crit time: 7 Seconds\n   Special Ability: Upon a wrong answer, you get one extra chance to answer again before you take damage\n")
-    print("3. Name: Rog\n   Race: Orc\n   Health: 12\n   Crit time: 6 Seconds\n   Special Ability: Once you have a two question streak, your crit time becomes unlimited\n")
+    print("3. Name: Rog\n   Race: Orc\n   Health: 12\n   Crit time: 6 Seconds\n   Special Ability: Once you have a two question streak, your crit time becomes unlimited\n\n")
 
 # \/ Creates objects for each character \/ 
 
@@ -36,7 +37,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Take input for character selection \/
 
-    characterSelection = input("")
+    characterSelection = input("\n")
 
 # \/ Matches variable "character" to whichever one was selected \/
 
@@ -52,5 +53,16 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Prints character selection by calling the 'name' value from the corresponding namedtuple \/
 
-    print(f'Awesome! You chose {character.name}!')    
+    print(f'\nAwesome! You chose {character.name}!\n')    
+
+# \/ Checks if ready to start game; if no, quit game \/
+
+    start = input("Are you ready to begin? (Yes or No)\n\n")
+
+    if start.lower() == "no":
+        print("Okay. Good bye :(")
+        quit()
+    
+    else:
+        print("Let's go!!\n")
 
