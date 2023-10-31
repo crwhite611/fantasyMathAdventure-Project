@@ -1,13 +1,41 @@
-# \/ This is an awesome python project written and designed by LJ, Nathan, and Callie \/
+# This is an awesome python project written and designed by LJ, Nathan, and Callie
 
 from collections import namedtuple
 import time # Allows use of sleep function; makes the program look cooler
+import random
 
-# \/ Declare question lists here \/
+# \/ Declaring Functions \/
 
-easyQuestions = []
-mediumQuestions = []
-hardQuestions = []
+def rollInitiative():
+
+    playerInit = random.randint(1,20)
+    enemyInit = random.randint(1,20)
+
+    if enemyInit > playerInit:
+        return "Enemy caught you off guard! He attacks first!"
+    else:
+        return "You caught him off gaurd! You attack first!"
+
+# \/ Declare question dictionaries here; problem mapped to answer \/
+
+easyQuestions = {
+    "x" : 10,
+    "x" : 20,
+    "x" : 30,
+    "x" : 40
+}
+mediumQuestions = { 
+    "x" : 10,
+    "x" : 20,
+    "x" : 30,
+    "x" : 40
+}
+hardQuestions = { 
+    "x" : 10,
+    "x" : 20,
+    "x" : 30,
+    "x" : 40
+}
 
 playerCharacter = namedtuple('playerCharacter',['name','race', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
@@ -27,7 +55,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     print("1. Name: Rush\n   Race: Elf\n   Health: 8\n   Crit time: 8 Seconds\n   Special Ability: Once you have a two question streak, you will regain two life per correct answer\n")
     print("2. Name: Samson\n   Race: Hobbit\n   Health: 10\n   Crit time: 7 Seconds\n   Special Ability: Upon a wrong answer, you get one extra chance to answer again before you take damage\n")
-    print("3. Name: Rog\n   Race: Orc\n   Health: 12\n   Crit time: 6 Seconds\n   Special Ability: Once you have a two question streak, your crit time becomes unlimited\n\n")
+    print("3. Name: Rog\n   Race: Orc\n   Health: 12\n   Crit time: 6 Seconds\n   Special Ability: Once you have a two question streak, your crit time becomes unlimited\n")
 
 # \/ Creates objects for each character \/ 
 
@@ -37,7 +65,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Take input for character selection \/
 
-    characterSelection = input("\n")
+    characterSelection = input("")
 
 # \/ Matches variable "character" to whichever one was selected \/
 
@@ -53,16 +81,19 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Prints character selection by calling the 'name' value from the corresponding namedtuple \/
 
-    print(f'\nAwesome! You chose {character.name}!\n')    
+    time.sleep(2)
+    print(f'Awesome! You chose {character.name}!')    
 
-# \/ Checks if ready to start game; if no, quit game \/
+# \/ Start Adventure \/
 
-    start = input("Are you ready to begin? (Yes or No)\n\n")
 
-    if start.lower() == "no":
-        print("Okay. Good bye :(")
-        quit()
+
+# \/ First Combat \/
+
+    # insert enemy ascii art
+
+    print(f'Oh no! There\'s an enemy ahead! {rollInitiative()}') # Decides who attacks first
+
     
-    else:
-        print("Let's go!!\n")
+
 
