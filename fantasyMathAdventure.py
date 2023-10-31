@@ -84,6 +84,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(2)
     print(f'Awesome! You chose {character.name}!')    
 
+# \/ Checks if ready to start game; if no, quit game \/
+
+    start = input("Are you ready to begin? (Yes or No)\n\n")
+
+    if start.lower() == "no":
+        print("Okay. Good bye :(")
+        quit()
+
+    else:
+        print("Let's go!!\n")
+        
 # \/ Start Adventure \/
 
 
@@ -94,6 +105,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     print(f'Oh no! There\'s an enemy ahead! {rollInitiative()}') # Decides who attacks first
 
-    
+
 
 
