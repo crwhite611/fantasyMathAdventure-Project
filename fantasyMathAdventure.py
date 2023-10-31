@@ -19,26 +19,28 @@ def rollInitiative():
 # \/ Declare question dictionaries here; problem mapped to answer \/
 
 easyQuestions = {
-    "x" : 10,
-    "x" : 20,
-    "x" : 30,
-    "x" : 40
+    "question" : 10,
+    "question" : 20,
+    "question" : 30,
+    "question" : 40
 }
 mediumQuestions = { 
-    "x" : 10,
-    "x" : 20,
-    "x" : 30,
-    "x" : 40
+    "question" : 10,
+    "question" : 20,
+    "question" : 30,
+    "question" : 40
 }
 hardQuestions = { 
-    "x" : 10,
-    "x" : 20,
-    "x" : 30,
-    "x" : 40
+    "question" : 10,
+    "question" : 20,
+    "question" : 30,
+    "question" : 40
 }
 
 playerCharacter = namedtuple('playerCharacter',['name','race', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
+
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
+
 
 while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
@@ -94,7 +96,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("Let's go!!\n")
-        
+
 # \/ Start Adventure \/
 
 
@@ -104,6 +106,8 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     # insert enemy ascii art
 
     print(f'Oh no! There\'s an enemy ahead! {rollInitiative()}') # Decides who attacks first
+
+
 
 
 
