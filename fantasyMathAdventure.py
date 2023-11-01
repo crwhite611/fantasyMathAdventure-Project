@@ -4,25 +4,13 @@ from collections import namedtuple
 import time # Allows use of sleep function; makes the program look cooler
 import random
 
-# \/ Declaring Functions \/
-
-def rollInitiative():
-
-    playerInit = random.randint(1,20)
-    enemyInit = random.randint(1,20)
-
-    if enemyInit > playerInit:
-        return "Enemy caught you off guard! He attacks first!"
-    else:
-        return "You caught him off gaurd! You attack first!"
-
 # \/ Declare question dictionaries here; problem mapped to answer \/
 
 easyQuestions = {
-    "question" : 10,
-    "question" : 20,
-    "question" : 30,
-    "question" : 40
+    "question1" : 10,
+    "question2" : 20,
+    "question3" : 30,
+    "question4" : 40
 }
 mediumQuestions = { 
     "question" : 10,
@@ -37,6 +25,17 @@ hardQuestions = {
     "question" : 40
 }
 
+# \/ Declaring Functions \/
+
+def getQuestion(easyQuestions):
+        
+        n = random.randint(0,len(easyQuestions)-1)
+        
+        for i, key in enumerate(easyQuestions.keys()):
+            if i == n:
+                return key
+            
+            
 playerCharacter = namedtuple('playerCharacter',['name','race', 'attack', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
 
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
@@ -77,7 +76,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             
         case '2':
             character = samson
-           
+            
         case '3':
             character = rog
 
@@ -105,10 +104,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     # insert enemy ascii art
 
-    print(f'Oh no! There\'s an enemy ahead! {rollInitiative()}') # Decides who attacks first
-
-
-
-
-
-
+    print('Oh no! There\'s an enemy ahead!') 
+    time.sleep(4)
+    print('To attack, answer the given question correctly.')
+    time.sleep(4)
+    print(f'To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    time.sleep(4)
+            
+    print(getQuestion(easyQuestions))
