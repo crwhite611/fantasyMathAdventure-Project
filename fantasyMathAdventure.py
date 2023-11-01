@@ -5,33 +5,13 @@ import time # Allows use of sleep function; makes the program look cooler
 import random
 import math
 
-# \/ Declaring Functions \/
-
-def getQuestion(questionDict):
-    n = random.randint(0,len(questionDict)-1)
-    for index,key in enumerate(questionDict):
-        if index == n:
-            return key
-        
-def getElapsedTime(startTime, endTime):
-    elapsedTime = math.floor(endTime - startTime)
-    return elapsedTime
-
-def calculateDamage(critTime, elapsedTime):
-    if int(critTime) >= elapsedTime:
-        print("Critcal Hit!! You defeated him in one shot!")
-
-    else:
-        print("Solid hit! That's partial damage! Keep going to defeat the enemy...")
-    
-
 # \/ Declare question dictionaries here; problem mapped to answer \/
 
 easyQuestions = {
-    "question" : 10,
-    "question" : 20,
-    "question" : 30,
-    "question" : 40
+    "question1" : 10,
+    "question2" : 20,
+    "question3" : 30,
+    "question4" : 40
 }
 mediumQuestions = { 
     "question" : 10,
@@ -46,6 +26,25 @@ hardQuestions = {
     "question" : 40
 }
 
+# \/ Declaring Functions \/
+
+def getQuestion(easyQuestions):
+        n = random.randint(0,len(easyQuestions)-1)
+        for i, key in enumerate(easyQuestions.keys()):
+            if i == n:
+                return key
+            
+def getElapsedTime(startTime, endTime):
+    elapsedTime = math.floor(endTime - startTime)
+    return elapsedTime
+
+def calculateDamage(critTime, elapsedTime):
+    if int(critTime) >= elapsedTime:
+        print("Critcal Hit!! You defeated him in one shot!")
+
+    else:
+        print("Solid hit! That's partial damage! Keep going to defeat the enemy...")
+            
 playerCharacter = namedtuple('playerCharacter',['name','race', 'attack', 'health', 'critTime']) # Creates "mould" for character object; allows us to map characteristics to character name
 
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
@@ -56,13 +55,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Charcter Selection Walkthrough \/
 
     print("\nThis is the Character Selecter. Each character has unique abilities, ranging from different healths, to crit times, to special powers.\n")
-    #time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
+    time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
     print("A creature's health determinds how much damage it can take, while its crit time is how long you can take to answer a question correctly and still deal critical damage.\n")
-    #time.sleep(6)
+    time.sleep(6)
     print("Some creatures also have special abilities to give you some extra help along the way.\n")
-    #time.sleep(4)
+    time.sleep(4)
     print("To select your character, type the number by your character's name:\n")
-    #time.sleep(4)
+    time.sleep(4)
 
     print("1. Name: Rush\n   Race: Elf\n   Health: 8\n   Crit time: 8 Seconds\n   Special Ability: Once you have a two question streak, you will regain two life per correct answer\n")
     print("2. Name: Samson\n   Race: Hobbit\n   Health: 10\n   Crit time: 7 Seconds\n   Special Ability: Upon a wrong answer, you get one extra chance to answer again before you take damage\n")
@@ -86,7 +85,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             
         case '2':
             character = samson
-           
+            
         case '3':
             character = rog
 
@@ -114,10 +113,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     # insert enemy ascii art
 
-    print(f'Oh no! There\'s an enemy ahead!') # Decides who attacks first
-
-    # How to attack here
-
+    print('Oh no! There\'s an enemy ahead!') 
+    time.sleep(4)
+    print('To attack, answer the given question correctly.')
+    time.sleep(4)
+    print(f'To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    time.sleep(4)
+            
     print(getQuestion(easyQuestions))
     startTime = time.time()
 
@@ -127,7 +129,3 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'You answered the question in {getElapsedTime(startTime, endTime)} seconds!')
 
     print(calculateDamage(character.critTime, getElapsedTime(startTime, endTime)))
-
-
-
-
