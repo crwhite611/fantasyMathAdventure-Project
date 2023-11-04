@@ -26,14 +26,23 @@ hardQuestions = {
     "question" : 40
 }
 
+answerList = [random.randint(0, 34), random.randint(0, 34), random.randint(0, 34)]
+
 # \/ Declaring Functions \/
 
-def getQuestion(easyQuestions):
-        n = random.randint(0,len(easyQuestions)-1)
-        for i, key in enumerate(easyQuestions.keys()):
+def getQuestion(questions):
+        n = random.randint(0,len(questions)-1)
+        for i, key in enumerate(questions.keys()):
             if i == n:
                 return key
             
+def getAnswer(questionDict, key):
+    answer = questionDict[key]
+    return answer            
+
+def answerChoices(answer, answerList):
+    answerList.insert(random.randint(0,3), answer)
+
 def getElapsedTime(startTime, endTime):
     elapsedTime = math.floor(endTime - startTime)
     return elapsedTime
