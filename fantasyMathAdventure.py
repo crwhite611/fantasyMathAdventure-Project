@@ -150,7 +150,7 @@ ogre = Enemy(3, 10)
 kobold = Enemy(4, 8)
 
 
-
+#------------------------------------------------------------------------------------------------FIXME---------------------------------------------------------------------------------------
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
 
 
@@ -176,7 +176,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     rog = PlayerCharacter('Rog','Orc', 8, 12, 4)
 
 # \/ Take input for character selection \/
-
+#------------------------------------------------------------------------------------------------FIXME------------------------------------------------------------------------------------------
     characterSelection = input("")
 
 # \/ Matches variable "character" to whichever one was selected \/
@@ -196,7 +196,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\nAwesome! You chose {character.name}!')    
 
 # \/ Checks if ready to start game; if no, quit game \/
-
+#-------------------------------------------------------------------------------------------------FIXME--------------------------------------------------------------------------------------------------------
     start = input("Are you ready to begin? (Yes or No)\n\n")
 
     if start.lower() == "no":
@@ -229,6 +229,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(question) # Prints question
     print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
     startTime = time.time() # Start timer
+    #----------------------------------------------------------------------------------------------------FIXME--------------------------------------------------------------------------------------------------------
     playerAnswer = input() # Takes answer input
     endTime = time.time() # End timer
 
@@ -256,6 +257,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
+    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
             endTime = time.time() # End timer
 
@@ -280,6 +282,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input()
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
