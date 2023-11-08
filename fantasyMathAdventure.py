@@ -8,22 +8,32 @@ import math
 # \/ Declare question dictionaries here; problem mapped to answer \/
 
 easyQuestions = {
-    "1+1" : 2,
-    "2+2" : 4,
-    "3+3" : 6,
-    "4+4" : 8
+    "2+17" : 19,
+    "12*4" : 48,
+    "74-18" : 56,
+    "89+21" : 110,
+    "13-17" : -4,
+    "2+16" : 18,
+    "15+4" : 19,
+    "12-18" : -6,
+    "13*2" : 26,
+    "14-9" : 5
 }
 mediumQuestions = { 
-    "question" : 10,
-    "question" : 20,
-    "question" : 30,
-    "question" : 40
+    "-3+2x=11" : 7,
+    "4x+6=-10" : -4,
+    "x+9=18-2x" : 3,
+    "2x+6=4x-2" : 4,
+    "15+5x=0" : -74,
+    "17x-12=114+3x" : 9,
+    "12x+0=144" : 12,
+    "-10x-19=19-8x" : -19
 }
 hardQuestions = { 
-    "question" : 10,
-    "question" : 20,
-    "question" : 30,
-    "question" : 40
+    "6/2(1+2)" : 9,
+    "7-24/8*4+6" : 1,
+    "18/3-7+2*5" : 9,
+    "51/17-4+6(2*3)" : 35 
 }
 
 incompleteAnswerList = [random.randint(0, 34), random.randint(0, 34), random.randint(0, 34)]
@@ -149,11 +159,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Charcter Selection Walkthrough \/
 
     print("\nThis is the Character Selecter. Each character has unique abilities, ranging from different healths, to crit times, to special powers.\n")
-    #time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
+    time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
     print("A creature's health determinds how much damage it can take, while its crit time is how long you can take to answer a question correctly and still deal critical damage.\n")
-    #time.sleep(6)
+    time.sleep(6)
     print("To select your character, type the number by your character's name:\n")
-    #time.sleep(4)
+    time.sleep(4)
 
     print("1. Name: Rush\n   Race: Elf\n   Attack: 5\n   Health: 8\n   Crit time: 10 Seconds\n")
     print("2. Name: Samson\n   Race: Hobbit\n   Attack: 7\n   Health: 10\n   Crit time: 7 Seconds\n")
@@ -205,11 +215,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     # insert enemy ascii art
 
     print('Oh no! There\'s an enemy Ogre ahead!') 
-    #time.sleep(4)
+    time.sleep(4)
     print('\nTo attack, answer the given question correctly.')
-    #time.sleep(4)
+    time.sleep(4)
     print(f'\nTo slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    #time.sleep(4)
+    time.sleep(4)
             
     question = getQuestion(easyQuestions) # Gets question randomly from dictionary
     answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
@@ -244,7 +254,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
 
             print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
+            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
             playerAnswer = input() # Takes answer input
             endTime = time.time() # End timer
@@ -278,6 +288,3 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         else: # Player dies if incorrect on the second try
             print("\nOh no! You were defeated! Better luck next time...")
             quit()
-
-    
-
