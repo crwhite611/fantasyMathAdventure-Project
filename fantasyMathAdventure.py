@@ -101,7 +101,6 @@ def isCorrect(playerAnswer):
             else:
                 correct = False
                 return correct
-    
 
 # \/ Creates class for character object; allows us to map characteristics to character name \/
 
@@ -111,9 +110,36 @@ class PlayerCharacter:
 
         self.name = name
         self.race = race
-        self.attacak = attack
+        self.attack = attack
         self.health = health
         self.critTime = critTime
+
+    def dealHalfDamage(self, enemyHealth, attack):
+        enemyHealth -= (attack//2)
+
+    def dealFullDamage(self, enemyHealth, attack):
+        enemyHealth -= attack
+
+# \/ Creates class for enemy object
+
+class Enemy:
+
+    def __init__(self, attack, health):
+        self.attacak = attack
+        self.health = health
+
+    def dealDamage(self, attack, playerHealth):
+        playerHealth -= attack
+
+# \/ Create enemies \/
+
+evilWizardRidingDragon = Enemy(7, 20)
+redDragon = Enemy(6, 15)
+blueDragon = Enemy(5, 12)
+ogre = Enemy(3, 10)
+kobold = Enemy(4, 8)
+
+
 
 playerStartInput = input("Welcome to Fantasy Math Adventure!\n\nTo play, type: \'Go\' \nTo quit, type: \'q\'\n") # Gotta start off the while loop ;) "start menu"
 
@@ -135,9 +161,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Creates objects for each character \/ 
 
-    rush = PlayerCharacter('Rush','Elf', 5, 8, 10)
-    samson = PlayerCharacter('Samson','Hobbit', 7, 10, 7)
-    rog = PlayerCharacter('Rog','Orc', 8, 12, 5)
+    rush = PlayerCharacter('Rush','Elf', 5, 8, 7)
+    samson = PlayerCharacter('Samson','Hobbit', 7, 10, 5)
+    rog = PlayerCharacter('Rog','Orc', 8, 12, 4)
 
 # \/ Take input for character selection \/
 
@@ -178,7 +204,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     # insert enemy ascii art
 
-    print('Oh no! There\'s an enemy ahead!') 
+    print('Oh no! There\'s an enemy Ogre ahead!') 
     #time.sleep(4)
     print('\nTo attack, answer the given question correctly.')
     #time.sleep(4)
@@ -204,15 +230,54 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-        else:
+
+# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
+
+        else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            character.dealFullDamage(ogre.health, character.attack)
+            print("Good job, but he is still alive! Answer the next question correctly to finish him!")
+
+            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
+            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
+            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
+            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
+
+            print(question) # Prints question
+            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
+            startTime = time.time() # Start timer
+            playerAnswer = input() # Takes answer input
+            endTime = time.time() # End timer
+
+            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            time.sleep(2)
+
+# \/ Check if second answer was correct \/
+
+            if calculateCritical(character.critTime, timeTakenToAnswer) == True:
+                print(f'\nYou correctly answered the question and defeated the enemy! Way to go!')
+
+            else:
+                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                playerAnswer = input()
+
+                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
+                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+
+                else: # Player dies if incorrect on the second try
+                    print("\nOh no! You were defeated! Better luck next time...")
+                    quit()
+
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input()
+        
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            halfDamage = int(character.attack)//2
-            print(f"\nYou did it! {halfDamage} damage was dealt and you avoided taking damage.")
+            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+
         else: # Player dies if incorrect on the second try
             print("\nOh no! You were defeated! Better luck next time...")
             quit()
+
+    
 
