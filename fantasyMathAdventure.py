@@ -116,7 +116,6 @@ def isCorrect(playerAnswer):
 class PlayerCharacter:
 
     def __init__(self, name, race, attack, health, critTime):
-
         self.name = name
         self.race = race
         self.attack = attack
@@ -129,7 +128,7 @@ class PlayerCharacter:
     def dealFullDamage(self, enemyHealth, attack):
         enemyHealth -= attack
 
-completionTime = 0 # Total time taken to complete game
+completionTime = 0 # Total time taken to complete combat
 
 # \/ Start Program \/
 
@@ -198,11 +197,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Prints character selection by calling the 'name' value from the corresponding namedtuple \/
 
-    print(f'\nAwesome! You chose {character.name}!')    
+    print(f'\nAwesome! You chose {character.name}!\n')    
 
 # \/ Checks if ready to start game; if no, quit game \/
 
-    user_input = input("Are you ready to begin? (Yes/No): ")
+    user_input = input("Are you ready to begin? (Yes/No): \n\n")
 
     while True:
 
@@ -233,7 +232,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(7)
     print("A feeling of unease begins to settle over you.\n")
     time.sleep(5)
-
     print("Rumors that the infamous Black Dagger Gang had been abducting people were circulating through the city.\n")
     time.sleep(5)
     print("With that in mind, having so few people around put you on edge.\n")
@@ -243,7 +241,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(5)
     print("You turn your head to look for the source of the noise, but see nothing.\n")
     time.sleep(5)
-
     print("As soon as your head is turned, however, you hear the sudden sound of rapid footsteps.\n")
     time.sleep(4)
     print("Your head snaps back forward just in time to see a man rushing toward you.\n")
@@ -259,11 +256,11 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ First Combat \/
 
     print('**Defeat the unknown man.') 
-    time.sleep(4)
+    time.sleep(3)
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(3)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(3)
             
     question = getQuestion(easyQuestions) # Gets question randomly from dictionary
     answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
@@ -397,7 +394,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(2)
     print(".\n")
     time.sleep(2)
-    print(".\n")
+    print(".\n\n")
     time.sleep(2)
     print("But that doesn\'t happen this time.\n\n\n")
     time.sleep(7)
@@ -462,9 +459,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Second Combat \/
 
-    print('\nTo attack, answer the given question correctly.')
+    print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
-    print(f'\nTo slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
     question = getQuestion(easyQuestions) # Gets question randomly from dictionary
@@ -603,7 +600,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(2)
     print(".\n")
     time.sleep(2)
-    print(".\n")
+    print(".\n\n")
     time.sleep(2)
     
 
@@ -641,9 +638,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Third Combat \/
 
-    print('\nTo attack, answer the given question correctly.')
+    print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
-    print(f'\nTo slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
     question = getQuestion(easyQuestions) # Gets question randomly from dictionary
@@ -674,13 +671,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("Good job, but he is still alive! Answer the next question correctly to finish him!")
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
@@ -697,7 +694,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
@@ -708,10 +705,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question and defeated the enemy! Way to go!')
+                print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -720,17 +717,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -738,16 +735,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
+    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
     answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
@@ -765,7 +763,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -777,13 +775,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("Good job, but he is still alive! Answer the next question correctly to finish him!")
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(mediumQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
@@ -800,7 +798,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
@@ -811,10 +809,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question and defeated the enemy! Way to go!')
+                print(f'\n**You correctly answered the question and defeated the enemy! Way to go!')
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -823,17 +821,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -841,13 +839,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 
@@ -933,9 +931,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Fourth Combat \/
 
-    print('\nTo attack, answer the given question correctly.')
+    print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
-    print(f'\nTo slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
     question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
@@ -954,7 +952,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -966,13 +964,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("Good job, but he is still alive! Answer the next question correctly to finish him!")
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(mediumQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
@@ -989,7 +987,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
@@ -1000,10 +998,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question and defeated the enemy! Way to go!')
+                print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -1012,17 +1010,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1030,16 +1028,18 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
+
+    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
     answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
@@ -1057,7 +1057,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -1069,13 +1069,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("Good job, but he is still alive! Answer the next question correctly to finish him!")
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(mediumQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
@@ -1103,10 +1103,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question and defeated the enemy! Way to go!')
+                print("\n**Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -1115,17 +1115,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1133,13 +1133,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # \/ Fourth post-combat text, only display this + following if player wins battle(?) \/
@@ -1302,9 +1302,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Fifth Combat \/
 
-    print('\nTo attack, answer the given question correctly.')
+    print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
-    print(f'\nTo slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
     question = getQuestion(hardQuestions) # Gets question randomly from dictionary
@@ -1323,7 +1323,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -1335,12 +1335,12 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
 
             question = getQuestion(hardQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
@@ -1368,10 +1368,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question! Way to go!')
+                print(f'\n**You correctly answered the question! Way to go!')
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -1380,17 +1380,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1398,16 +1398,18 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
+
+    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     question = getQuestion(hardQuestions) # Gets question randomly from dictionary
     answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
@@ -1425,7 +1427,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -1437,12 +1439,12 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
 
             question = getQuestion(hardQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
@@ -1459,7 +1461,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
@@ -1470,10 +1472,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question! Way to go!')
+                print(f'\n**You correctly answered the question! Way to go!')
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -1482,17 +1484,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1500,16 +1502,18 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
+
+    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     question = getQuestion(hardQuestions) # Gets question randomly from dictionary
     answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
@@ -1527,7 +1531,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
             break
         else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+            playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
     endTime = time.time() # End timer
 
@@ -1539,12 +1543,12 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     if isCorrect(playerAnswer) == True:
         if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
 
 # \/ If non-lethal was dealt, asks another question so you can deal full damage \/
 
         else: 
-            print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
 
             question = getQuestion(hardQuestions) # Gets second question randomly from dictionary
             answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
@@ -1561,21 +1565,21 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
             timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
+            completionTime += timeTakenToAnswer 
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
 
             if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                print(f'\nYou correctly answered the question! Way to go!')
+                print(f'\n**You correctly answered the question! Way to go!')
 
             else:
-                print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
                 
                 playerAnswer = input()
 
@@ -1584,17 +1588,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                     if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                         break
                     else:
-                        playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
                 if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
                 else: # Player dies if incorrect on the second try
-                    print("\nOh no! You were defeated! Better luck next time...")
+                    print("\n**Oh no! You were defeated! Better luck next time...")
                     quit()
 
     else:
-        print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1602,13 +1606,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                 break
             else:
-                playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
         
         if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\nYou did it! {character.attack} damage was dealt and you avoided taking damage.")
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
 
         else: # Player dies if incorrect on the second try
-            print("\nOh no! You were defeated! Better luck next time...")
+            print("\n**Oh no! You were defeated! Better luck next time...")
             quit()
 
 # \/ Fifth post-combat text \/
@@ -1625,7 +1629,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ First Possible Ending, only display if player completes battles quickly enough \/
 
-    print(completionTime)
 
     if completionTime <= 30:
         print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
@@ -1663,8 +1666,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         time.sleep(5)
         print("She still looks so normal, as if she could open her eyes at any moment.\n\n")
         time.sleep(6)
-        print("You know that won\'t happen, however.\n\n")
-        time.sleep(5)
         print("Deep down, you know that she is already dead.\n")
         time.sleep(7)
         print("A wave of emotions washes over you, filling you a volatile mixture of anger and sadness.")
