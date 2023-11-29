@@ -1092,7 +1092,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
                 if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
                     break
                 else:
-                    playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
 
             endTime = time.time() # End timer
 
