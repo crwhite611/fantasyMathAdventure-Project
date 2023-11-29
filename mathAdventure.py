@@ -1,6 +1,5 @@
 # This is an awesome python project written and designed by LJ, Nathan, and Callie
 
-from collections import namedtuple
 import time # Allows use of sleep function; makes the program look cooler
 import random
 import math
@@ -58,8 +57,9 @@ def getAnswerChoices(randomIndex, answer, incompleteAnswerList):
     incompleteAnswerList.insert(randomIndex, answer)
     return incompleteAnswerList
 
-def getElapsedTime(startTime, endTime):
+def getElapsedTime(startTime, endTime, completionTime):
     elapsedTime = math.floor(endTime - startTime)
+    completionTime += elapsedTime
     return elapsedTime
 
 def calculateCritical(critTime, elapsedTime):
@@ -130,24 +130,7 @@ class PlayerCharacter:
     def dealFullDamage(self, enemyHealth, attack):
         enemyHealth -= attack
 
-# \/ Creates class for enemy object
-
-class Enemy:
-
-    def __init__(self, attack, health):
-        self.attacak = attack
-        self.health = health
-
-    def dealDamage(self, attack, playerHealth):
-        playerHealth -= attack
-
-# \/ Create enemies \/
-
-evilWizardRidingDragon = Enemy(7, 20)
-redDragon = Enemy(6, 15)
-blueDragon = Enemy(5, 12)
-ogre = Enemy(3, 10)
-kobold = Enemy(4, 8)
+completionTime = 0 # Total time taken to complete game
 
 # \/ Start Program \/
 
@@ -277,8 +260,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ First Combat \/
 
-    # insert enemy ascii art
-
     print('Defeat the unknown man.') 
     time.sleep(4)
     print('\nTo attack, answer the given question correctly.')
@@ -306,7 +287,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     endTime = time.time() # End timer
 
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
     time.sleep(2)
  
 # \/ Checks if answer was true; if so, critical hit? \/
@@ -319,7 +300,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
         else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            character.dealFullDamage(ogre.health, character.attack)
             print("Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
@@ -330,7 +310,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
-    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
 
             while True:
@@ -342,7 +321,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
             endTime = time.time() # End timer
 
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
@@ -371,7 +350,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -512,7 +490,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     endTime = time.time() # End timer
 
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
     time.sleep(2)
  
 # \/ Checks if answer was true; if so, critical hit? \/
@@ -525,7 +503,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
         else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            character.dealFullDamage(ogre.health, character.attack)
             print("Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
@@ -536,7 +513,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
-    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
 
             while True:
@@ -548,7 +524,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
             endTime = time.time() # End timer
 
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
@@ -577,7 +553,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -692,7 +667,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     endTime = time.time() # End timer
 
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
     time.sleep(2)
  
 # \/ Checks if answer was true; if so, critical hit? \/
@@ -705,7 +680,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
         else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            character.dealFullDamage(ogre.health, character.attack)
             print("Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
@@ -716,7 +690,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
-    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
 
             while True:
@@ -728,7 +701,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
             endTime = time.time() # End timer
 
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
@@ -757,7 +730,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -881,7 +853,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     endTime = time.time() # End timer
 
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
     time.sleep(2)
  
 # \/ Checks if answer was true; if so, critical hit? \/
@@ -894,7 +866,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
         else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            character.dealFullDamage(ogre.health, character.attack)
             print("Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
@@ -905,7 +876,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
-    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
 
             while True:
@@ -917,7 +887,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
             endTime = time.time() # End timer
 
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
@@ -946,7 +916,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1154,7 +1123,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     endTime = time.time() # End timer
 
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
     time.sleep(2)
  
 # \/ Checks if answer was true; if so, critical hit? \/
@@ -1167,7 +1136,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
         else: 
             print(f'\nYou correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            character.dealFullDamage(ogre.health, character.attack)
             print("Good job, but he is still alive! Answer the next question correctly to finish him!")
 
             question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
@@ -1178,7 +1146,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             print(question) # Prints question
             print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
             startTime = time.time() # Start timer
-    #-------------------------------------------------------------------------------------------------------FIXME-----------------------------------------------------------------------------------------------
             playerAnswer = input() # Takes answer input
 
             while True:
@@ -1190,7 +1157,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
             endTime = time.time() # End timer
 
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            timeTakenToAnswer = getElapsedTime(startTime, endTime, completionTime) # Calculate elapsed time
             time.sleep(2)
 
 # \/ Check if second answer was correct \/
@@ -1219,7 +1186,6 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     else:
         print("\nOh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-    #-----------------------------------------------------------------------------------------------------------FIXME-------------------------------------------------------------------------------------------------
         playerAnswer = input() # Takes answer input
 
         while True:
@@ -1250,52 +1216,49 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ First Possible Ending, only display if player completes battles quickly enough \/
 
+    print(completionTime)
 
-    print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
-    time.sleep(5)
-    print("With the danger gone, you rush back to your sister.\n")
-    time.sleep(5)
-    print("You kneel next to her and are relieved to find that she is still breathing. Still, you know that she needs help quickly, or she will not survive.\n")
-    time.sleep(8)
-    print("Wasting no more time, you pick her up.\n")
-    time.sleep(5)
-    print("Although you are tired after your journey and the difficult battle, you set out immediately, heading back towards the city.\n")
-    time.sleep(7)
-    print("As you do, you smile to yourself.\n")
-    time.sleep(7)
-    print("Despite the condition of your sister, you can somehow feel that she will be okay.\n")
+    if completionTime <= 30:
+        print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
+        time.sleep(5)
+        print("With the danger gone, you rush back to your sister.\n")
+        time.sleep(5)
+        print("You kneel next to her and are relieved to find that she is still breathing. Still, you know that she needs help quickly, or she will not survive.\n")
+        time.sleep(8)
+        print("Wasting no more time, you pick her up.\n")
+        time.sleep(5)
+        print("Although you are tired after your journey and the difficult battle, you set out immediately, heading back towards the city.\n")
+        time.sleep(7)
+        print("As you do, you smile to yourself.\n")
+        time.sleep(7)
+        print("Despite the condition of your sister, you can somehow feel that she will be okay.\n")
 
+    else:
 
-
-# \/ Second Possible Ending, only display if player completes battles too slowly \/
-
-
-
-    print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
-    time.sleep(6)
-    print("With the danger gone, you rush back to your sister.\n")
-    time.sleep(5)
-    print("You kneel next to her, placing your ear against her chest.\n")
-    time.sleep(5)
-    print("Your heart drops as you realize that you cannot hear any breathing.\n")
-    time.sleep(6)
-    print("A new fear washes over you, greater than anything else you have felt so far. You pull your head away and look down at her.\n")
-    time.sleep(8)
-    print("You frantically scan her body, searching for any signs of life.\n\n\n")
-    time.sleep(8)
-    print("There are none.\n")
-    time.sleep(8)
-    print("Your body trembles as you look at her face.\n")
-    time.sleep(5)
-    print("She still looks so normal, as if she could open her eyes at any moment.\n\n")
-    time.sleep(6)
-    print("You know that won\'t happen, however.\n\n")
-    time.sleep(5)
-    print("Deep down, you know that she is already dead.\n")
-    time.sleep(7)
-    print("A wave of emotions washes over you, filling you a volatile mixture of anger and sadness.")
-    time.sleep(7)
-    print("You throw back your head as a roar of pain and grief bursts out from deep within you, only stopping once you are out of breath.")
-    time.sleep(8)
-    print("Your body stops trembling as you suddenly feel empty, and you realize that you are alone.")
-
+        print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
+        time.sleep(6)
+        print("With the danger gone, you rush back to your sister.\n")
+        time.sleep(5)
+        print("You kneel next to her, placing your ear against her chest.\n")
+        time.sleep(5)
+        print("Your heart drops as you realize that you cannot hear any breathing.\n")
+        time.sleep(6)
+        print("A new fear washes over you, greater than anything else you have felt so far. You pull your head away and look down at her.\n")
+        time.sleep(8)
+        print("You frantically scan her body, searching for any signs of life.\n\n\n")
+        time.sleep(8)
+        print("There are none.\n")
+        time.sleep(8)
+        print("Your body trembles as you look at her face.\n")
+        time.sleep(5)
+        print("She still looks so normal, as if she could open her eyes at any moment.\n\n")
+        time.sleep(6)
+        print("You know that won\'t happen, however.\n\n")
+        time.sleep(5)
+        print("Deep down, you know that she is already dead.\n")
+        time.sleep(7)
+        print("A wave of emotions washes over you, filling you a volatile mixture of anger and sadness.")
+        time.sleep(7)
+        print("You throw back your head as a roar of pain and grief bursts out from deep within you, only stopping once you are out of breath.")
+        time.sleep(8)
+        print("Your body stops trembling as you suddenly feel empty, and you realize that you are alone.")
