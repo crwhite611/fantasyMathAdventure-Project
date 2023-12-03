@@ -159,15 +159,15 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print("To select your character, type the number by your character's name:\n")
     time.sleep(4)
 
-    print("1. Name: Rush\n   Race: Elf\n   Attack: 5\n   Health: 8\n   Crit time: 10 Seconds\n")
+    print("1. Name: Rush\n   Race: Elf\n   Attack: 5\n   Health: 8\n   Crit time: 9 Seconds\n")
     print("2. Name: Samson\n   Race: Hobbit\n   Attack: 7\n   Health: 10\n   Crit time: 7 Seconds\n")
     print("3. Name: Rog\n   Race: Orc\n   Attack: 8\n   Health: 12\n   Crit time: 5 Seconds\n")
 
 # \/ Creates objects for each character \/ 
 
-    rush = PlayerCharacter('Rush','Elf', 5, 8, 7)
-    samson = PlayerCharacter('Samson','Hobbit', 7, 10, 5)
-    rog = PlayerCharacter('Rog','Orc', 8, 12, 4)
+    rush = PlayerCharacter('Rush','Elf', 5, 8, 9)
+    samson = PlayerCharacter('Samson','Hobbit', 7, 10, 7)
+    rog = PlayerCharacter('Rog','Orc', 8, 12, 5)
 
 # \/ Take input for character selection \/
 
