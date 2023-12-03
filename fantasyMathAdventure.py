@@ -54,6 +54,9 @@ def whereInsertRealAnswer():
     return randomIndex
 
 def getAnswerChoices(randomIndex, answer, incompleteAnswerList):
+    for i in range(len(incompleteAnswerList)):
+        if incompleteAnswerList[i] == answer:
+            incompleteAnswerList[i] = incompleteAnswerList[i] + 1
     incompleteAnswerList.insert(randomIndex, answer)
     return incompleteAnswerList
 
@@ -151,7 +154,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     print("\nThis is the Character Selecter. Each character has unique abilities, including different healths and crit times.\n")
     time.sleep(6) # From imported 'time' module; counts specified seconds before executing next line of code; makes the program look cooler 
-    print("A creature's health determinds how much damage it can take, while its crit time is how long you can take to answer a question correctly and still deal critical damage.\n")
+    print("A creature's health determines how much damage it can take, while its crit time is how long you can take to answer a question correctly and still deal critical damage.\n")
     time.sleep(6)
     print("To select your character, type the number by your character's name:\n")
     time.sleep(4)
@@ -214,9 +217,14 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
             user_input = input("\nInvalid input. Please enter 'Yes' or 'No'.\n\n")
 # \/ Start Adventure \/
 
+    time.sleep(3)
+    print("\n.\n")
+    time.sleep(2)
     print(".\n")
-    print(".\n")
+    time.sleep(2)
     print(".\n\n")
+    time.sleep(2)
+
     print("\nThe night is quiet and peaceful. The sky is cloudless, and moonlight illuminates the dark ground below.\n")
     time.sleep(5)
     print("You are on your way home from the local restaurant after a rare meal out. Beside you walks your younger sister.\n")
@@ -412,14 +420,16 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(5)
     print("You had heard that the leader of the gang, Gyle, frequented a nearby tavern.\n")
     time.sleep(4)
-    print("If the Black Daggers really were responsible, then he would surely know the whereabouts of your sister.\n")
+    print("If the Black Daggers really were responsible, then he would surely know the whereabouts of your sister.\n\n")
     time.sleep(3)
+
     print(".\n")
     time.sleep(2)
     print(".\n")
     time.sleep(2)
     print(".\n\n")
     time.sleep(2)
+
     print("\nYou stand outside the tavern. You feel nervousness welling up inside of you, but you quickly squash it down.\n") 
     time.sleep(5)
     print("You harden your resolve and open the door.\n")
@@ -566,7 +576,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Second post-combat text \/
 
-    print("The gang leader stumbles back, struggling to stand. You prepare to attack him again, but he raises his hands in surrender.\n")
+    print("\nThe gang leader stumbles back, struggling to stand. You prepare to attack him again, but he raises his hands in surrender.\n")
     time.sleep(5)
     print('“Fine, fine! I\'ll tell you where they are!” He says hurriedly. You relax slightly.\n')
     time.sleep(5)
@@ -590,8 +600,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(6)
     print("You unroll the map. It shows the city and the surrounding areas, including the Southend Mountains. There is a small \'x\' over a specific spot in the mountains.\n")
     time.sleep(8)
-    print("You turn and leave the tavern, and then the city entirely.\n\n\n\n")
+    print("You turn and leave the tavern, and then the city entirely.\n\n")
     time.sleep(3)
+
     print(".\n")
     time.sleep(2)
     print(".\n")
@@ -857,13 +868,13 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Third post-combat text, only display this + following if player wins battle(?) \/
 
-    print("The ogre lets out a low growl as it realizes that you are not as easy of a meal as it thought. Its posture is defensive, and it is clear that it sees you as a threat now.\n")
+    print("\nThe ogre lets out a low growl as it realizes that you are not as easy of a meal as it thought. Its posture is defensive, and it is clear that it sees you as a threat now.\n")
     time.sleep(10)
     print("You keep your guard up, ready to defend yourself if the ogre attacks again.\n")
     time.sleep(5)
     print("It becomes clear that you will not have to, however, as the ogre turns and runs away.\n")
     time.sleep(5)
-    print("You let out a sigh of relief as the ogre leaves. You rest for a moment before continuing along the path.\n\n\n\n")
+    print("You let out a sigh of relief as the ogre leaves. You rest for a moment before continuing along the path.\n\n")
     time.sleep(3)
 
     print(".\n")
@@ -1159,7 +1170,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Fourth post-combat text, only display this + following if player wins battle(?) \/
 
-    print("You pant heavily, out of breath. Ernulf falls to one knee, unable to stand after taking so much damage.\n")
+    print("\nYou pant heavily, out of breath. Ernulf falls to one knee, unable to stand after taking so much damage.\n")
     time.sleep(6)
     print('“Where is she?” You growl, your arm raised, ready to strike again if Ernulf is still uncooperative.\n')
     time.sleep(6)
@@ -1182,7 +1193,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(6)
     print("Even the strongest knights and heroes in the kingdom had failed to put an end to his tyranny.\n")
     time.sleep(5)
-    print("Maybe it really would be best for you to go home…\n")
+    print("Maybe it really would be best for you to go home…\n\n")
     time.sleep(3)
 
     print(".\n")
@@ -1194,20 +1205,20 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print("No.\n")
     time.sleep(5)
     print("You had already come this far, and you were not going to leave your sister in the hands of someone like Morden.\n")
-    time.sleep(8)
+    time.sleep(7)
     print("With your mind made up and your resolve hardened, you look Ernulf in the eye.\n")
     time.sleep(5)
-    print('Tell me where Morden is,” you say. Ernulf is surprised, and looks at you with a mixture of disbelief and something akin to respect.\n') 
+    print('"Tell me where Morden is,” you say. Ernulf is surprised, and looks at you with a mixture of disbelief and something akin to respect.\n') 
     time.sleep(6)
     print('“If that is your choice…” He begins. “He has set up a lair on the tallest mountain, directly east from here.”\n')
     time.sleep(5)
     print("As soon as the words leave his mouth, you turn around and run out of the shelter. You don\'t even bother sneaking past the bandits, instead sprinting straight to the gap in the fence.\n")
-    time.sleep(10)
-    print("The bandits are surprised to see you, and some of them start yelling at each other to go after you.\n")
     time.sleep(7)
+    print("The bandits are surprised to see you, and some of them start yelling at each other to go after you.\n")
+    time.sleep(5)
     print("Once you make it to the gap in the fence, you look back and expect to see them behind you. For some reason, however, they have not followed you.\n")
-    time.sleep(9)
-    print("You are not sure why, but you do not care. You continue running, heading east.\n\n\n\n")
+    time.sleep(7)
+    print("You are not sure why, but you do not care. You continue running, heading east.\n\n")
     time.sleep(3)
 
     print(".\n")
@@ -1247,7 +1258,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(10)
     print("This is where your sister is.\n\n\n")
     time.sleep(5)
-    print("You take a deep breath and enter the cave.\n")
+    print("You take a deep breath and enter the cave.\n\n")
     time.sleep(3)
     
     print(".\n")
@@ -1289,7 +1300,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(6)
     print("You are about to pick her up, but before you can, a voice rings out from behind you.\n\n")
     time.sleep(6)
-    print('“Was (he/she) someone you knew?” The voice says. It is not loud, yet it seems to reverberate through your head.\n')
+    print('“Was she someone you knew?” The voice says. It is not loud, yet it seems to reverberate through your head.\n')
     time.sleep(7)
     print("You spin around, your heartbeat at an all-time high. As you lay eyes on the person who spoke, you instinctively know who it is.\n")
     time.sleep(5)
@@ -1656,7 +1667,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
 # \/ Fifth post-combat text \/
 
-    print("The dragon lets out a deafening screech as you deal the final blow. As the dragon struggles to stay airborne, Morden shouts in anger and disbelief.\n")
+    print("\nThe dragon lets out a deafening screech as you deal the final blow. As the dragon struggles to stay airborne, Morden shouts in anger and disbelief.\n")
     time.sleep(9)
     print('“No! How could this be!?” He bellows, his eyes wide and wild.\n')
     time.sleep(5)
@@ -1669,8 +1680,8 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ First Possible Ending, only display if player completes battles quickly enough \/
 
 
-    if completionTime <= 40:
-        print("You pant, attempting to catch your breath. Somehow, you managed to win.\n")
+    if completionTime <= 45:
+        print("\nYou pant, attempting to catch your breath. Somehow, you managed to win.\n")
         time.sleep(5)
         print("With the danger gone, you rush back to your sister.\n")
         time.sleep(5)
@@ -1707,11 +1718,10 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
         time.sleep(6)
         print("Deep down, you know that she is already dead.\n")
         time.sleep(7)
-        print("A wave of emotions washes over you, filling you a volatile mixture of anger and sadness.")
+        print("A wave of emotions washes over you, filling you with a volatile mixture of anger and sadness.\n")
         time.sleep(7)
-        print("You throw back your head as a roar of pain and grief bursts out from deep within you, only stopping once you are out of breath.")
+        print("You throw back your head as a roar of pain and grief bursts out from deep within you, only stopping once you are out of breath.\n")
         time.sleep(8)
-        print("Your body stops trembling as you suddenly feel empty, and you realize that you are alone.")
+        print("Your body stops trembling as you suddenly feel empty, and you realize that you are alone.\n")
         time.sleep(7)
         quit()
-    
