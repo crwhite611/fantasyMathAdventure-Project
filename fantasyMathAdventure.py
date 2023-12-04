@@ -35,7 +35,7 @@ hardQuestions = {
     "51/17-4+6(2*3)" : 35 
 }
 
-incompleteAnswerList = [random.randint(0, 34), random.randint(0, 34), random.randint(0, 34)]
+incompleteAnswerList = [random.randint(0, 34), random.randint(0, 100), random.randint(0, 34)]
 
 # \/ Declaring Functions \/
 
@@ -74,7 +74,7 @@ def calculateCritical(critTime, elapsedTime):
 
     return criticalHit
 
-def isCorrect(playerAnswer):
+def isCorrect(playerAnswer, answerChoices, answerIndex):
      
      match playerAnswer.lower():
 
@@ -113,6 +113,113 @@ def isCorrect(playerAnswer):
             else:
                 correct = False
                 return correct
+            
+def superSpecialCombatFunction(character, questionList, completionTime, incompleteAnswerList):
+
+    question = getQuestion(questionList) # Gets question randomly from dictionary
+    answer = getAnswer(questionList, question) # Gets answer based on initial dictionary/key
+    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
+    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
+
+    print(question) # Prints question
+    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
+    startTime = time.time() # Start timer
+    
+    playerAnswer = input() # Takes answer input
+    
+    while True:
+
+        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
+            break
+        else:
+            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
+
+    endTime = time.time() # End timer
+
+    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+    completionTime += timeTakenToAnswer
+    time.sleep(2)
+ 
+# \/ Checks if answer was true; if so, critical hit? \/
+
+    if isCorrect(playerAnswer, answerChoices, answerIndex) == True:
+        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
+            time.sleep(2)
+
+# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
+
+        else: 
+            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
+            time.sleep(2)
+            print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
+            time.sleep(2)
+
+            question = getQuestion(questionList) # Gets second question randomly from dictionary
+            answer = getAnswer(questionList, question) # Gets answer based on initial dictionary/key
+            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
+            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
+
+            print(question) # Prints question
+            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
+            startTime = time.time() # Start timer
+            playerAnswer = input() # Takes answer input
+
+            while True:
+
+                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
+                    break
+                else:
+                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
+
+            endTime = time.time() # End timer
+
+            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
+            completionTime += timeTakenToAnswer
+            time.sleep(2)
+
+# \/ Check if second answer was correct \/
+
+            if isCorrect(playerAnswer, answerChoices, answerIndex) == True: # Player deals half damage if correct on the second try
+
+                print(f"\n**You did it! You correctly answered the question in {timeTakenToAnswer} seconds and {character.attack} damage was dealt.")
+
+            else:
+                
+                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!\n")
+                playerAnswer = input()
+
+                while True:
+
+                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
+                        break
+                    else:
+                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
+
+                if isCorrect(playerAnswer, answerChoices, answerIndex) == True: # Player deals half damage if correct on the second try
+                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
+
+                else: # Player dies if incorrect on the second try
+                    print("\n**Oh no! You were defeated! Better luck next time...")
+                    quit()
+
+    else:
+        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
+        playerAnswer = input() # Takes answer input
+
+        while True:
+
+            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
+                break
+            else:
+                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
+        
+        if isCorrect(playerAnswer, answerChoices, answerIndex) == True: # Player deals half damage if correct on the second try
+            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
+
+        else: # Player dies if incorrect on the second try
+            print("\n**Oh no! You were defeated! Better luck next time...")
+            quit()
 
 # \/ Creates class for character object; allows us to map characteristics to character name \/
 
@@ -208,17 +315,17 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 
     while True:
 
-        if user_input.lower() == 'yes':
+        if user_input.lower() in ['yes','y']:
             break
-        elif user_input.lower() == 'no':
-            print("Alright, see you next time!")
-            quit() 
+        elif user_input.lower() in ['no','n']: 
+            quit()
         else:
-            user_input = input("\nInvalid input. Please enter 'Yes' or 'No'.\n\n")
+            user_input = input("\n**Invalid input. Please enter a valid answer (Yes/No):")
+
 # \/ Start Adventure \/
 
-    time.sleep(3)
-    print("\n.\n")
+    time.sleep(2)
+    print("\n\n.\n")
     time.sleep(2)
     print(".\n")
     time.sleep(2)
@@ -267,111 +374,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # \/ First post-combat text \/
  
@@ -468,111 +471,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # \/ Second post-combat text \/
 
@@ -620,7 +519,7 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     time.sleep(5)
     print("You spot a path that seems to go in the same direction you need to go. You step onto the path to continue your journey.\n")
     time.sleep(6)
-    print("After just a few more minutes of walking, you hear a rustling sound coming from the foliage at the side of the path. You raise your guard, unsure of what it it.\n")
+    print("After just a few more minutes of walking, you hear a rustling sound coming from the foliage at the side of the path. You raise your guard, unsure of what it is.\n")
     time.sleep(8)
     print("Could it be one of the bandits?\n\n")
     time.sleep(5)
@@ -645,225 +544,18 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
     
-    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
+    print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 
 # \/ Third post-combat text, only display this + following if player wins battle(?) \/
@@ -953,220 +645,18 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
-    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
+    print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
             
-    question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(mediumQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    print('\n**To attack, answer the given question correctly.')
+    time.sleep(4)
+    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
+    time.sleep(4)
+            
+    superSpecialCombatFunction(character, mediumQuestions, completionTime, incompleteAnswerList)
 
 # \/ Fourth post-combat text, only display this + following if player wins battle(?) \/
 
@@ -1332,338 +822,29 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(easyQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
-    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
+    print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(easyQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(easyQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, mediumQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
-    print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
+    print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
 
     print('\n**To attack, answer the given question correctly.')
     time.sleep(4)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
     time.sleep(4)
             
-    question = getQuestion(mediumQuestions) # Gets question randomly from dictionary
-    answer = getAnswer(mediumQuestions, question) # Gets answer based on initial dictionary/key
-    answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-    answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-    print(question) # Prints question
-    print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n\n') # Prints answer choices
-    startTime = time.time() # Start timer
-    
-    playerAnswer = input() # Takes answer input
-    
-    while True:
-
-        if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-            break
-        else:
-            playerAnswer = input("Invalid input. Please enter a valid answer (a, b, c, d).")
-
-    endTime = time.time() # End timer
-
-    timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-    completionTime += timeTakenToAnswer
-    time.sleep(2)
- 
-# \/ Checks if answer was true; if so, critical hit? \/
-
-    if isCorrect(playerAnswer) == True:
-        if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! That\'s a CRITICAL HIT! ')
-
-# \/ If non-lethal was dealt, asks another question so you can deal full damage \/
-
-        else: 
-            print(f'\n**You correctly answered the question in {timeTakenToAnswer} seconds! You deal {character.attack} damage!')
-            print("**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-            question = getQuestion(hardQuestions) # Gets second question randomly from dictionary
-            answer = getAnswer(hardQuestions, question) # Gets answer based on initial dictionary/key
-            answerIndex = whereInsertRealAnswer() # Stores where the answer was inserted in answer choices list
-            answerChoices = getAnswerChoices(answerIndex, answer, incompleteAnswerList) # Gives list of answer choices w the real answer inserted randomly
-
-            print(question) # Prints question
-            print(f'\n   A) {answerChoices[0]}\n   B) {answerChoices[1]}\n   C) {answerChoices[2]}\n   D) {answerChoices[3]}\n') # Prints answer choices
-            startTime = time.time() # Start timer
-            playerAnswer = input() # Takes answer input
-
-            while True:
-
-                if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                    break
-                else:
-                    playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-            endTime = time.time() # End timer
-
-            timeTakenToAnswer = getElapsedTime(startTime, endTime) # Calculate elapsed time
-            completionTime += timeTakenToAnswer
-            time.sleep(2)
-
-# \/ Check if second answer was correct \/
-            if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-
-                if calculateCritical(character.critTime, timeTakenToAnswer) == True:
-                    print("**Good job, but he is still alive! Answer the next question correctly to finish him!")
-
-                else:
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-            else:
-                
-                print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-                playerAnswer = input()
-
-                while True:
-
-                    if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                        break
-                    else:
-                        playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-
-                if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-                    print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-                else: # Player dies if incorrect on the second try
-                    print("\n**Oh no! You were defeated! Better luck next time...")
-                    quit()
-
-    else:
-        print("\n**Oh no! Your answer was incorrect! Try one more time...if you get it wrong, you will be defeated!")
-        playerAnswer = input() # Takes answer input
-
-        while True:
-
-            if playerAnswer.lower() in ['a', 'b', 'c', 'd']:
-                break
-            else:
-                playerAnswer = input("**Invalid input. Please enter a valid answer (a, b, c, d).")
-        
-        if isCorrect(playerAnswer) == True: # Player deals half damage if correct on the second try
-            print(f"\n**You did it! {character.attack} damage was dealt and you avoided taking damage.")
-
-        else: # Player dies if incorrect on the second try
-            print("\n**Oh no! You were defeated! Better luck next time...")
-            quit()
+    superSpecialCombatFunction(character, hardQuestions, completionTime, incompleteAnswerList)
 
 # \/ Fifth post-combat text \/
 
