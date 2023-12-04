@@ -370,9 +370,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
     print('**Defeat the unknown man.') 
     time.sleep(3)     
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(2)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
@@ -467,9 +467,9 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Second Combat \/
 
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(2)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
@@ -540,20 +540,16 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Third Combat \/
 
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(2)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
     
     print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-    print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
-    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
@@ -641,20 +637,16 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Fourth Combat \/
 
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(2)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
     print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-            
-    print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
-    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, mediumQuestions, completionTime, incompleteAnswerList)
 
@@ -818,31 +810,23 @@ while playerStartInput != 'q': # While loop keeps game going til player "quits"
 # \/ Fifth Combat \/
 
     print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
+    time.sleep(2)
     print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, easyQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
     print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-    print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
-    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, mediumQuestions, completionTime, incompleteAnswerList)
 
 # ------------------------------------------------------------------Asks another series of questions------------------------------------------------------------------------
 
     print("\n**Good job, but he is still alive! Answer the next question correctly to deal more damage!")
-
-    print('\n**To attack, answer the given question correctly.')
-    time.sleep(4)
-    print(f'\n**To slay him in one hit, answer the question within {character.critTime} seconds. Ready?\n')
-    time.sleep(4)
+    time.sleep(2)
             
     superSpecialCombatFunction(character, hardQuestions, completionTime, incompleteAnswerList)
 
